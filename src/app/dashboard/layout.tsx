@@ -1,11 +1,20 @@
-import Link from "next/link";
+import { SidebarItem } from "@/components/custom";
 
-const links = [
+import { ISidebar } from "@/interfaces";
+
+const links: ISidebar[] = [
   { name: "accordion", href: "accordion" },
   { name: "alert", href: "alert" },
   { name: "button", href: "button" },
-  { name: "alert dialog", href: "alert-dialog" },
-  { name: "dialog", href: "dialog" },
+  { 
+    name: "dialogs",
+    href: "dialogs",
+    subRoutes: [
+      { name: "dialog", href: "dialog" },
+      { name: "alert dialog", href: "alert-dialog" }
+    ]
+  },
+  // { name: "dialog", href: "dialog" },
   { name: "badge", href: "badge" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -112,15 +121,8 @@ export default function DashboardLayout({
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
               <div className="flex-1 px-3 bg-white divide-y space-y-1">
                 <ul className="space-y-2 pb-2">
-                  {links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-base capitalize text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
-                      >
-                        <span className="ml-3">{link.name}</span>
-                      </Link>
-                    </li>
+                  {links.map(({ name, href, subRoutes }) =>  (
+                    <SidebarItem key={href} name={name} href={href} subRoutes={subRoutes} />
                   ))}
                 </ul>
               </div>
